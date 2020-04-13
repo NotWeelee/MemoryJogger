@@ -1,2 +1,2 @@
-rootProject.name='MemoryJogger'
+rootProject.name='Memory_Jogger'
 include ':app'

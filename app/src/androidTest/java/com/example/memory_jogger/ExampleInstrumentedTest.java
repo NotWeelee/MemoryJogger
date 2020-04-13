@@ -1,4 +1,4 @@
-package com.example.memoryjogger;
+package com.example.memory_jogger;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.memoryjogger", appContext.getPackageName());
+        assertEquals("com.example.memory_jogger", appContext.getPackageName());
     }
 }

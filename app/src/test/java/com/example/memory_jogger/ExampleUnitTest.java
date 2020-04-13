@@ -1,4 +1,4 @@
-package com.example.memoryjogger;
+package com.example.memory_jogger;
 
 import org.junit.Test;
 
