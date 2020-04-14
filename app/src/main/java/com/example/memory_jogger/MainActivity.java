@@ -84,16 +84,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkMatch() {
-        if(computerChosen.size()-1 != userChosen.size()-1) {
+        if(computerChosen.get(computerChosen.size()-1) != userChosen.get(userChosen.size()-1)) {
             match = false;
         }
     }
 
     public void addUserChosen(Button e) {
-        userChosen.add(userChosen.size()-1, e);
+        userChosen.add(e);
     }
 
     public void addComputerChosen(Button e) {
-        computerChosen.add(computerChosen.size()-1, e);
+        computerChosen.add(e);
     }
 }
