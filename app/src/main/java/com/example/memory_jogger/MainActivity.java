@@ -84,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkMatch() {
-        if(computerChosen.get(computerChosen.size()-1) != userChosen.get(userChosen.size()-1)) {
+        if(computerChosen.size() == 0 || userChosen.size() == 0) {
+            match = true;
+        }
+        else if (computerChosen.get(computerChosen.size()-1) != userChosen.get(userChosen.size()-1)) {
             match = false;
         }
     }
