@@ -12,15 +12,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class playActivity2 extends AppCompatActivity {
 
     Button startGameButton, b1, b2, b3, b4;
 
     List<Integer> buttons;
+    int[] sequence;
 
     int curRound;
     int curGuess;
+    final int TOTAL_ROUNDS = 10;
+
+    Random rg = new Random((4)+1);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,8 +56,13 @@ public class playActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startGameButton.setVisibility(View.INVISIBLE);
+                disableButtons();
                 curGuess = 0;
                 curRound = 1;
+                sequence = new int[TOTAL_ROUNDS];            //generate empty sequence
+                for (int i=0; i<sequence.length; i++){      //populate sequence
+                    sequence[i] = rg.nextInt();
+                }
                 generateButtons(curRound);
             }
         });
@@ -116,7 +126,7 @@ public class playActivity2 extends AppCompatActivity {
                     public void run() {
                         curGuess = 0;
                         curRound++;
-                        generateButtons(curRound);
+                        generateButtons(2);
                     }
                 }, 1000);
             }
@@ -137,9 +147,7 @@ public class playActivity2 extends AppCompatActivity {
         b3.setText("");
         b4.setText("");
 
-        Collections.shuffle(buttons);
-
-        for (int i = 0; i < number; i++) {
+        for (int i = 1; i <= (number); i++) {       //highlight as many tiles as rounds
             highlightButton(buttons.get(i));
         }
         new Handler().postDelayed(new Runnable() {
@@ -154,22 +162,43 @@ public class playActivity2 extends AppCompatActivity {
 
                 enableButtons();
             }
-        }, 1000);
+        }, 1500);
+        Toast.makeText(this, "Your turn", Toast.LENGTH_SHORT).show();
     }
 
     private void highlightButton(int number) {
         switch (number) {
             case 1:
-                b1.setText("HIGHLIGHT");
+                b1.setText("HIGHLIGHT");new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                }
+            }, 1000);
+                b1.setText("");
                 break;
             case 2:
-                b2.setText("HIGHLIGHT");
+                b2.setText("HIGHLIGHT");;new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                }
+            }, 1000);
+                b1.setText("");
                 break;
             case 3:
-                b3.setText("HIGHLIGHT");
+                b3.setText("HIGHLIGHT");;new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                }
+            }, 1000);
+                b1.setText("");
                 break;
             case 4:
-                b4.setText("HIGHLIGHT");
+                b4.setText("HIGHLIGHT");;new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                }
+            }, 1000);
+                b1.setText("");
                 break;
         }
     }
