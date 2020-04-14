@@ -1,5 +1,6 @@
 package com.example.memory_jogger;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -18,14 +19,14 @@ public class playActivity2 extends AppCompatActivity {
 
     Button startGameButton, b1, b2, b3, b4;
 
-    List<Integer> buttons;
+    //    List<Integer> buttons;
     int[] sequence;
 
     int curRound;
     int curGuess;
     final int TOTAL_ROUNDS = 10;
 
-    Random rg = new Random((4)+1);
+    Random rg = new Random();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,11 +47,11 @@ public class playActivity2 extends AppCompatActivity {
 
         disableButtons();
 
-        buttons = new ArrayList<>();
-        buttons.add(1);
-        buttons.add(2);
-        buttons.add(3);
-        buttons.add(4);
+//        buttons = new ArrayList<>();
+//        buttons.add(1);
+//        buttons.add(2);
+//        buttons.add(3);
+//        buttons.add(4);
 
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,8 +61,8 @@ public class playActivity2 extends AppCompatActivity {
                 curGuess = 0;
                 curRound = 1;
                 sequence = new int[TOTAL_ROUNDS];            //generate empty sequence
-                for (int i=0; i<sequence.length; i++){      //populate sequence
-                    sequence[i] = rg.nextInt();
+                for (int i = 0; i < sequence.length; i++) {      //populate sequence
+                    sequence[i] = rg.nextInt((4) + 1);
                 }
                 generateButtons(curRound);
             }
@@ -103,7 +104,7 @@ public class playActivity2 extends AppCompatActivity {
     private void buttonLogic(View v) {
         List<Integer> tempList = new ArrayList<>();
         for (int i = 0; i < curRound; i++) {
-            tempList.add(buttons.get(i));
+//            tempList.add(buttons.get(i));
         }
 
         if (tempList.contains(v.getTag())) {
@@ -147,8 +148,10 @@ public class playActivity2 extends AppCompatActivity {
         b3.setText("");
         b4.setText("");
 
-        for (int i = 1; i <= (number); i++) {       //highlight as many tiles as rounds
-            highlightButton(buttons.get(i));
+        for (int i = 0; i < (3); i++) {            //highlighting as many tiles as rounds
+            int thisbtn = sequence[i];             //get data in array index
+            System.out.println("ASSIGNING data at index i to thisbtn");
+            highlightButton(thisbtn);              //highlight corresponding button
         }
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -167,39 +170,48 @@ public class playActivity2 extends AppCompatActivity {
     }
 
     private void highlightButton(int number) {
-        switch (number) {
-            case 1:
-                b1.setText("HIGHLIGHT");new Handler().postDelayed(new Runnable() {
+        if (number == 1) {
+            b1.setBackgroundColor(Color.BLACK);
+            System.out.println("HIGHLIGHTING b1");
+            b1.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    b1.setBackgroundColor(Color.parseColor("#80FF0000"));
                 }
-            }, 1000);
-                b1.setText("");
-                break;
-            case 2:
-                b2.setText("HIGHLIGHT");;new Handler().postDelayed(new Runnable() {
+            }, 1200);
+
+        }
+        if (number == 2) {
+            b2.setBackgroundColor(Color.BLACK);
+            System.out.println("HIGHLIGHTING b2");
+            b2.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    b2.setBackgroundColor(Color.parseColor("#800000FF"));
                 }
-            }, 1000);
-                b1.setText("");
-                break;
-            case 3:
-                b3.setText("HIGHLIGHT");;new Handler().postDelayed(new Runnable() {
+            }, 1200);
+
+        }
+        if (number == 3) {
+            b3.setBackgroundColor(Color.BLACK);
+            System.out.println("HIGHLIGHTING b3");
+            b3.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    b3.setBackgroundColor(Color.parseColor("#8000FF00"));
                 }
-            }, 1000);
-                b1.setText("");
-                break;
-            case 4:
-                b4.setText("HIGHLIGHT");;new Handler().postDelayed(new Runnable() {
+            }, 1200);
+
+        }
+        if (number == 4) {
+            b4.setBackgroundColor(Color.BLACK);
+            System.out.println("HIGHLIGHTING b4");
+            b4.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
                 }
-            }, 1000);
-                b1.setText("");
-                break;
+            }, 1200);
         }
     }
 
