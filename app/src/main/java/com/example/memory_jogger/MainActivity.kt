@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import com.example.memory_jogger.playActivity2 as playActivity2
+import com.example.memory_jogger.playActivity2 as playActivity21
 
 class MainActivity : AppCompatActivity() {
 
@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)                  //show this layout
 
         playMenuButton.setOnClickListener {             //when playMenuButton is clicked start playActivity
-            startActivity(Intent(this, playActivity2::class.java))
+            startActivity(Intent(this, playActivity21::class.java))
 
         }
     }
