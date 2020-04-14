@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView scoreView = findViewById(R.id.scoreView);
+        final TextView scoreNum = findViewById(R.id.scoreNum);
 
         final Button redButton = findViewById(R.id.redButton);
         final Button yellowButton = findViewById(R.id.yellowButton);
@@ -35,12 +37,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean match = true;
                 final Random rg = new Random();
+                int score = 0;
 
                 if(computerChosen.isEmpty()) {
                     while(match = true) {
-                        int score = 0;
                         computerChosen.add(buttonArray[rg.nextInt(4)]);
-                        computerChosen.get(score).getBackground().setAlpha(70);
+                        computerChosen.get(computerChosen.size()-1).getBackground().setAlpha(70);
+                        computerChosen.get(computerChosen.size()-1).getBackground().setAlpha(70);
 
                         redButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -71,14 +74,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-                        if(computerChosen.get(score) != userChosen.get(score)) {
+                        if(computerChosen.get(computerChosen.size()-1) != userChosen.get(userChosen.size()-1)) {
                             match = false;
                         }
                         else {
                             score++;
-                            scoreView.setText(score);
+                            scoreNum.setText(score);
                         }
-
                     }
                 }
             }

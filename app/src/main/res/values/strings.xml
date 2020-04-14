@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Memory_Jogger</string>
+    <string name="start">Start</string>
+    <string name="title">Memory Jogger</string>
+    <string name="score">score</string>
+    <string name="scoreNum">0</string>
 </resources>
