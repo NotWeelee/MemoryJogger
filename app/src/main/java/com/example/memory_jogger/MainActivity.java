@@ -14,12 +14,19 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    final ArrayList<Button> computerChosen = new ArrayList<>();
+    final ArrayList<Button> userChosen = new ArrayList<>();
+    boolean match = true;
+    Random rg = new Random();
+    int score = 0;
+
+    TextView scoreNum = findViewById(R.id.scoreNum);
+    TextView title = findViewById(R.id.title);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        final TextView scoreNum = findViewById(R.id.scoreNum);
 
         final Button redButton = findViewById(R.id.redButton);
         final Button yellowButton = findViewById(R.id.yellowButton);
@@ -28,62 +35,67 @@ public class MainActivity extends AppCompatActivity {
         final Button startButton = findViewById(R.id.startButton);
 
         final Button[] buttonArray = {redButton, yellowButton, greenButton, blueButton};
-        final ArrayList<Button> computerChosen = new ArrayList<>();
-        final ArrayList<Button> userChosen = new ArrayList<>();
-
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean match = true;
-                final Random rg = new Random();
-                int score = 0;
-
-                if(computerChosen.isEmpty()) {
-                    while(match = true) {
-                        computerChosen.add(buttonArray[rg.nextInt(4)]);
-                        computerChosen.get(computerChosen.size()-1).getBackground().setAlpha(70);
-                        computerChosen.get(computerChosen.size()-1).getBackground().setAlpha(70);
-
-                        redButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                userChosen.add(redButton);
-                                userChosen.get(userChosen.size()-1).getBackground().setAlpha(70);
-                            }
-                        });
-                        yellowButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                userChosen.add(yellowButton);
-                                userChosen.get(userChosen.size()-1).getBackground().setAlpha(70);
-                            }
-                        });
-                        greenButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                userChosen.add(greenButton);
-                                userChosen.get(userChosen.size()-1).getBackground().setAlpha(70);
-                            }
-                        });
-                        blueButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                userChosen.add(blueButton);
-                                userChosen.get(userChosen.size()-1).getBackground().setAlpha(70);
-                            }
-                        });
-
-                        if(computerChosen.get(computerChosen.size()-1) != userChosen.get(userChosen.size()-1)) {
-                            match = false;
-                        }
-                        else {
-                            score++;
-                            scoreNum.setText(score);
-                        }
+                do{
+                    if(userChosen.size() < computerChosen.size()) {
+                        addComputerChosen(buttonArray[rg.nextInt(4)]);
                     }
-                }
+                }while(match = true);
             }
         });
+
+        redButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addUserChosen(redButton);
+                checkMatch();
+            }
+        });
+
+        yellowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addUserChosen(yellowButton);
+                checkMatch();
+            }
+        });
+
+        greenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addUserChosen(greenButton);
+                checkMatch();
+            }
+        });
+
+        blueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addUserChosen(blueButton);
+                checkMatch();
+            }
+        });
+    }
+
+    public void checkMatch() {
+        if(computerChosen.size()-1 != userChosen.size()-1) {
+            match = false;
+            title.setText("You choose poorly!");
+        }
+        else{
+            score++;
+            scoreNum.setText(score);
+        }
+    }
+
+    public void addUserChosen(Button e) {
+        userChosen.add(userChosen.size()-1, e);
+    }
+
+    public void addComputerChosen(Button e) {
+        computerChosen.add(computerChosen.size()-1, e);
     }
 }
