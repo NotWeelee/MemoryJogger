@@ -2,6 +2,7 @@ package com.example.memory_jogger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
     Random rg = new Random();
     int score = 0;
 
-    TextView scoreNum = findViewById(R.id.scoreNum);
-    TextView title = findViewById(R.id.title);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final TextView scoreNum = findViewById(R.id.scoreNum);
+        final TextView title = findViewById(R.id.title);
 
         final Button redButton = findViewById(R.id.redButton);
         final Button yellowButton = findViewById(R.id.yellowButton);
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 do{
-                    if(userChosen.size() < computerChosen.size()) {
+                    if(computerChosen.isEmpty() || userChosen.size() < computerChosen.size()) {
                         addComputerChosen(buttonArray[rg.nextInt(4)]);
                     }
                 }while(match = true);
@@ -51,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addUserChosen(redButton);
+                redButton.setBackgroundColor(Color.WHITE);
+                redButton.setBackgroundColor(Color.rgb(100, 29, 20));
                 checkMatch();
             }
         });
@@ -83,11 +86,6 @@ public class MainActivity extends AppCompatActivity {
     public void checkMatch() {
         if(computerChosen.size()-1 != userChosen.size()-1) {
             match = false;
-            title.setText("You choose poorly!");
-        }
-        else{
-            score++;
-            scoreNum.setText(score);
         }
     }
 
