@@ -39,15 +39,33 @@ public class MainActivity extends AppCompatActivity {
 
         final Button[] buttonArray = {redButton, yellowButton, greenButton, blueButton};
 
+        for(int i=0; i < 10; i++) {
+            computerChosen.add(buttonArray[rg.nextInt(4)]);
+        }
+
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int counter = 0;
-                for(int i=0; i < 10; i++) {
-                    computerChosen.add(buttonArray[rg.nextInt(4)]);
-                }
-                for(int j=0; j < 10; j++) {
-                    
+                for(int j=0; j < computerChosen.size()-1; j++){
+                    final int finalJ = j;
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(computerChosen.get(finalJ) == redButton) {
+                                redButtonChange(redButton, 100);
+                            }
+                            if(computerChosen.get(finalJ) == yellowButton) {
+                                yellowButtonChange(yellowButton, 100);
+                            }
+                            if(computerChosen.get(finalJ) == greenButton) {
+                                greenButtonChange(greenButton, 100);
+                            }
+                            if(computerChosen.get(finalJ) == blueButton) {
+                                blueButtonChange(blueButton, 100);
+                            }
+                        }
+                    }, 300);
                 }
             }
         });
@@ -56,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addUserChosen(redButton);
-                redButtonChange(redButton);
+                redButtonChange(redButton, 100);
                 //checkMatch();
             }
         });
@@ -65,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addUserChosen(yellowButton);
-                yellowButtonChange(yellowButton);
+                yellowButtonChange(yellowButton, 100);
                 //checkMatch();
             }
         });
@@ -74,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addUserChosen(greenButton);
-                greenButtonChange(greenButton);
+                greenButtonChange(greenButton, 100);
                 //checkMatch();
             }
         });
@@ -83,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 addUserChosen(blueButton);
-                blueButtonChange(blueButton);
+                blueButtonChange(blueButton, 100);
                 //checkMatch();
             }
         });
@@ -100,43 +118,43 @@ public class MainActivity extends AppCompatActivity {
         userChosen.add(e);
     }
 
-    public void redButtonChange(final Button e){
+    public void redButtonChange(final Button e, int time){
         e.setBackgroundColor(Color.parseColor("#FF8A33"));
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 e.setBackgroundColor(Color.parseColor("#FF4933"));
             }
-        }, 100);
+        }, time);
     }
 
-    public void yellowButtonChange(final Button e){
+    public void yellowButtonChange(final Button e, int time){
         e.setBackgroundColor(Color.parseColor("#FFC133"));
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 e.setBackgroundColor(Color.parseColor("#D7FF33"));
             }
-        }, 100);
+        }, time);
     }
 
-    public void greenButtonChange(final Button e){
+    public void greenButtonChange(final Button e, int time){
         e.setBackgroundColor(Color.parseColor("#DDFF33"));
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 e.setBackgroundColor(Color.parseColor("#33FF46"));
             }
-        }, 100);
+        }, time);
     }
 
-    public void blueButtonChange(final Button e){
+    public void blueButtonChange(final Button e, int time){
         e.setBackgroundColor(Color.parseColor("#3380FF"));
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 e.setBackgroundColor(Color.parseColor("#3349FF"));
             }
-        }, 100);
+        }, time);
     }
 }
