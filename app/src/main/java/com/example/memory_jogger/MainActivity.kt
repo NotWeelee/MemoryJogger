@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)                  //show this layout
 
         playMenuButton.setOnClickListener {             //when playMenuButton is clicked start playActivity
-            startActivity(Intent(this, playActivity2::class.java))
+            startActivity(Intent(this, GameActivity::class.java))
 
         }
     }

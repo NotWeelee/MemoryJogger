@@ -47,12 +47,6 @@ public class playActivity2 extends AppCompatActivity {
 
         disableButtons();
 
-//        buttons = new ArrayList<>();
-//        buttons.add(1);
-//        buttons.add(2);
-//        buttons.add(3);
-//        buttons.add(4);
-
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +97,7 @@ public class playActivity2 extends AppCompatActivity {
 
     private void buttonLogic(View v) {
         List<Integer> tempList = new ArrayList<>();
+        int[] tempSequence = new int[TOTAL_ROUNDS];
         for (int i = 0; i < curRound; i++) {
 //            tempList.add(buttons.get(i));
         }
@@ -119,7 +114,7 @@ public class playActivity2 extends AppCompatActivity {
         if (curGuess == curRound) {
             disableButtons();
             if (curRound == 10) {
-                Toast.makeText(this, "You win!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "You win!", Toast.LENGTH_LONG).show();
                 startGameButton.setVisibility(View.VISIBLE);
             } else {
                 new Handler().postDelayed(new Runnable() {
@@ -135,33 +130,27 @@ public class playActivity2 extends AppCompatActivity {
     }
 
     private void lostGame() {
-        Toast.makeText(this, "You lose!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "You lose!", Toast.LENGTH_LONG).show();
         disableButtons();
         startGameButton.setVisibility(View.VISIBLE);
     }
 
     private void generateButtons(int number) {
 
-        //code for each button to be set to normal state
-        b1.setText("");
-        b2.setText("");
-        b3.setText("");
-        b4.setText("");
-
-        for (int i = 0; i < (3); i++) {            //highlighting as many tiles as rounds
+        unhighlight();
+        for (int i = 0; i < 3; i++) {            //highlighting as many tiles as rounds
             int thisbtn = sequence[i];             //get data in array index
-            System.out.println("ASSIGNING data at index i to thisbtn");
-            highlightButton(thisbtn);              //highlight corresponding button
+            highlightNumber2(thisbtn);              //highlight corresponding button
+
+
+
+
         }
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 //code to set buttons to normal state
-                b1.setText("");
-                b2.setText("");
-                b3.setText("");
-                b4.setText("");
-
+                unhighlight();
 
                 enableButtons();
             }
@@ -215,6 +204,23 @@ public class playActivity2 extends AppCompatActivity {
         }
     }
 
+    private void highlightNumber2(int number){
+        switch(number){
+            case 1:
+                b1.setBackgroundColor(Color.BLACK);
+                break;
+            case 2:
+                b2.setBackgroundColor(Color.BLACK);
+                break;
+            case 3:
+                b3.setBackgroundColor(Color.BLACK);
+                break;
+            case 4:
+                b4.setBackgroundColor(Color.BLACK);
+                break;
+        }
+    }
+
     private void enableButtons() {
         b1.setEnabled(true);
         b2.setEnabled(true);
@@ -227,5 +233,12 @@ public class playActivity2 extends AppCompatActivity {
         b2.setEnabled(false);
         b3.setEnabled(false);
         b4.setEnabled(false);
+    }
+
+    private void unhighlight() {
+        b1.setBackgroundColor(Color.parseColor("#80FF0000"));
+        b2.setBackgroundColor(Color.parseColor("#800000FF"));
+        b3.setBackgroundColor(Color.parseColor("#8000FF00"));
+        b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
     }
 }

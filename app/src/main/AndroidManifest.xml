@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".playActivity" />
         <activity android:name=".playActivity2" />
+        <activity android:name=".playActivityTest" />
+        <activity android:name=".GameActivity" />
     </application>
 
 </manifest>
