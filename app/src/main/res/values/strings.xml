@@ -4,4 +4,5 @@
     <string name="title">Memory Jogger</string>
     <string name="score">score</string>
     <string name="scoreNum">0</string>
+    <string name="play">PLAY</string>
 </resources>

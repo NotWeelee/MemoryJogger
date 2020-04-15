@@ -8,23 +8,34 @@
 
     <Button
         android:id="@+id/playMenuButton"
-        android:layout_width="0dp"
-        android:layout_height="95dp"
-        android:background="#0E0101"
-        android:text="PLAY"
-        android:textColor="#E6E6E6"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="500dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="500dp"
+        android:background="@android:color/darker_gray"
+        android:fontFamily="@font/holtwood_one_sc"
+        android:text="@string/play"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="203dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.813" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/background"
-        tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="-132dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
