@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
-            android:text="Score:"
+            android:text="Score: "
             android:textColor="#000000"
             android:textSize="30sp" />
 
@@ -34,19 +34,6 @@
             android:layout_toRightOf="@+id/textView2"
             android:text="Start" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="6dp"
-            android:layout_toEndOf="@+id/scoreTextView"
-            android:layout_toRightOf="@+id/scoreTextView"
-            android:text="0"
-            android:textColor="#000000"
-            android:textSize="24sp" />
     </RelativeLayout>
 
     <LinearLayout

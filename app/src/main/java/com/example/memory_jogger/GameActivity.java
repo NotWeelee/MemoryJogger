@@ -19,7 +19,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     TextView score;
     Button b1, b2, b3, b4, start;
 
-    int difficultyLevel = 3;
+    int difficultyLevel = 4;
     int[] sequenceToCopy = new int[10];
 
     private Handler myHandler;
@@ -28,7 +28,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     //For Checking Player Answers
     int playerResponses;
-    int playerScore;
+    int playerScore = 0;
     boolean isResponding;
 
     @Override
@@ -43,6 +43,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         b3 = (Button) findViewById(R.id.greenButton);
         b4 = (Button) findViewById(R.id.yellowButton);
         start = (Button) findViewById(R.id.startGameButton);
+        score = (TextView) findViewById(R.id.scoreTextView);
+        score.setText("Score: " + playerScore);
 
         //assign listeners
         b1.setOnClickListener(this);
@@ -58,56 +60,49 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (playSequence) {
                     //Thread action goes here
-                    b1.setVisibility(View.VISIBLE);
-                    b2.setVisibility(View.VISIBLE);
-                    b3.setVisibility(View.VISIBLE);
-                    b4.setVisibility(View.VISIBLE);
+                    unhighlight();
 
                     switch (sequenceToCopy[elementToPlay]) {
                         case 1:
-//                            b1.setVisibility(View.INVISIBLE);
                             b1.setBackgroundColor(Color.BLACK);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     b1.setBackgroundColor(Color.parseColor("#80FF0000"));
                                 }
-                            }, 1500);
+                            }, 500);
                             break;
                         case 2:
-//                            b2.setVisibility(View.INVISIBLE);
                             b2.setBackgroundColor(Color.BLACK);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     b2.setBackgroundColor(Color.parseColor("#800000FF"));
                                 }
-                            }, 1500);
+                            }, 500);
                             break;
                         case 3:
-//                            b3.setVisibility(View.INVISIBLE);
                             b3.setBackgroundColor(Color.BLACK);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     b3.setBackgroundColor(Color.parseColor("#8000FF00"));
                                 }
-                            }, 1500);
+                            }, 500);
                             break;
                         case 4:
-//                            b4.setVisibility(View.INVISIBLE);
                             b4.setBackgroundColor(Color.BLACK);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
                                     b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
                                 }
-                            }, 1500);
+                            }, 500);
                             break;
                     }
 
                     elementToPlay++;
-                    if(elementToPlay == difficultyLevel){
+                    if (elementToPlay == difficultyLevel) {
                         sequenceFinished();
                     }
                 }
@@ -131,26 +126,29 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             ourRandom = randInt.nextInt(4);
             ourRandom++;
             sequenceToCopy[i] = ourRandom;
+            System.out.println("ALEX sequence is " + sequenceToCopy[i]);
         }
     }
 
     public void playASequence() {
         createSequence();
-        isResponding = false;
+        isResponding = false; //time for computer to respond
         elementToPlay = 0;
         playerResponses = 0;
-        Toast.makeText(this, "Your Turn", Toast.LENGTH_SHORT).show();
-        playSequence = true;
+        playSequence = true; //immediately starts thread block
     }
 
     public void sequenceFinished() {
-        playSequence = false;
-        //set buttons to visible?
-        b1.setVisibility(View.VISIBLE);
-        b2.setVisibility(View.VISIBLE);
-        b3.setVisibility(View.VISIBLE);
-        b4.setVisibility(View.VISIBLE);
-        isResponding = true;
+        playSequence = false; //immediately ends thread block
+        unhighlight(); //set buttons to original state
+        Toast.makeText(this, "Your Turn", Toast.LENGTH_SHORT);
+        isResponding = true; //time for player to respond
+    }
+    private void unhighlight() {
+        b1.setBackgroundColor(Color.parseColor("#80FF0000"));
+        b2.setBackgroundColor(Color.parseColor("#800000FF"));
+        b3.setBackgroundColor(Color.parseColor("#8000FF00"));
+        b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
     }
 }
 
