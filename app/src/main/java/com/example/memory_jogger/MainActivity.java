@@ -144,10 +144,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         isResponding = true; //time for player to respond
     }
     private void unhighlight() {
-        b1.setBackgroundColor(Color.parseColor("#80FF0000"));
-        b2.setBackgroundColor(Color.parseColor("#800000FF"));
-        b3.setBackgroundColor(Color.parseColor("#8000FF00"));
-        b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
+        b1.setBackgroundColor(Color.parseColor("#FF0000"));
+        b2.setBackgroundColor(Color.parseColor("#0000FF"));
+        b3.setBackgroundColor(Color.parseColor("#00FF00"));
+        b4.setBackgroundColor(Color.parseColor("#FFFF00"));
     }
 }
 
