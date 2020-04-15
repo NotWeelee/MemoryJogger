@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b1.setBackgroundColor(Color.parseColor("#80FF0000"));
+                                    b1.setBackgroundColor(Color.parseColor("#FF0000"));
                                 }
                             }, 500);
                             break;
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b2.setBackgroundColor(Color.parseColor("#800000FF"));
+                                    b2.setBackgroundColor(Color.parseColor("#0000FF"));
                                 }
                             }, 500);
                             break;
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b3.setBackgroundColor(Color.parseColor("#8000FF00"));
+                                    b3.setBackgroundColor(Color.parseColor("#00FF00"));
                                 }
                             }, 500);
                             break;
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
+                                    b4.setBackgroundColor(Color.parseColor("#FFFF00"));
                                 }
                             }, 500);
                             break;
