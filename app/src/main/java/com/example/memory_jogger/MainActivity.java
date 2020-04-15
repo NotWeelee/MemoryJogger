@@ -63,38 +63,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     switch (sequenceToCopy[elementToPlay]) {
                         case 1:
-                            b1.setBackgroundColor(Color.parseColor("#3380FF"));
+                            b1.setBackgroundColor(Color.BLACK);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b1.setBackgroundColor(Color.parseColor("#3349FF"));
+                                    b1.setBackgroundColor(Color.parseColor("#FF0000"));
                                 }
                             }, 500);
                             break;
                         case 2:
-                            b2.setBackgroundColor(Color.parseColor("#FF8A33"));
+                            b2.setBackgroundColor(Color.BLACK);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b2.setBackgroundColor(Color.parseColor("#FF4933"));
+                                    b2.setBackgroundColor(Color.parseColor("#0000FF"));
                                 }
                             }, 500);
                             break;
                         case 3:
-                            b3.setBackgroundColor(Color.parseColor("#DDFF33"));
+                            b3.setBackgroundColor(Color.BLACK);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b3.setBackgroundColor(Color.parseColor("#33FF46"));
+                                    b3.setBackgroundColor(Color.parseColor("#00FF00"));
                                 }
                             }, 500);
                             break;
                         case 4:
-                            b4.setBackgroundColor(Color.parseColor("#FFC133"));
+                            b4.setBackgroundColor(Color.BLACK);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b4.setBackgroundColor(Color.parseColor("#D7FF33"));
+                                    b4.setBackgroundColor(Color.parseColor("#FFFF00"));
                                 }
                             }, 500);
                             break;
