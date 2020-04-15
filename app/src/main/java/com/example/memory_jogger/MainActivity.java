@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int counter = 0;
-                for(int j=0; j < computerChosen.size()-1; j++){
+                for(int j=0; j < computerChosen.size(); j++){
                     final int finalJ = j;
                     handler.postDelayed(new Runnable() {
                         @Override
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                                 blueButtonChange(blueButton, 100);
                             }
                         }
-                    }, 300);
+                    }, 3000);
                 }
             }
         });
