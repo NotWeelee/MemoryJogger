@@ -1,160 +1,153 @@
 package com.example.memory_jogger;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    final ArrayList<Button> computerChosen = new ArrayList<>();
-    final ArrayList<Button> userChosen = new ArrayList<>();
-    boolean match = true;
-    Random rg = new Random();
-    Handler handler = new Handler();
-    int score = 0;
+    TextView score;
+    Button b1, b2, b3, b4, start;
+
+    int difficultyLevel = 7;
+    int[] sequenceToCopy = new int[10];
+
+    private Handler myHandler;
+    boolean playSequence = false;
+    int elementToPlay = 0;
+
+    //For Checking Player Answers
+    int playerResponses;
+    int playerScore = 0;
+    boolean isResponding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView scoreNum = findViewById(R.id.scoreNum);
-        final TextView title = findViewById(R.id.title);
+        //initialize objects
+        b1 = (Button) findViewById(R.id.blueButton);
+        b2 = (Button) findViewById(R.id.redButton);
+        b3 = (Button) findViewById(R.id.greenButton);
+        b4 = (Button) findViewById(R.id.yellowButton);
+        start = (Button) findViewById(R.id.startButton);
+        score = (TextView) findViewById(R.id.scoreNum);
+        score.setText("Score: " + playerScore);
 
-        final Button redButton = findViewById(R.id.redButton);
-        final Button yellowButton = findViewById(R.id.yellowButton);
-        final Button greenButton = findViewById(R.id.greenButton);
-        final Button blueButton = findViewById(R.id.blueButton);
-        final Button startButton = findViewById(R.id.startButton);
+        //assign listeners
+        b1.setOnClickListener(this);
+        b2.setOnClickListener(this);
+        b3.setOnClickListener(this);
+        b4.setOnClickListener(this);
+        start.setOnClickListener(this);
 
-        final Button[] buttonArray = {redButton, yellowButton, greenButton, blueButton};
+        //This code defines the thread
+        myHandler = new android.os.Handler() {
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
 
-        for(int i=0; i < 10; i++) {
-            computerChosen.add(buttonArray[rg.nextInt(4)]);
-        }
+                if (playSequence) {
+                    //Thread action goes here
+                    unhighlight();
 
-        startButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int counter = 0;
-                for(int j=0; j < computerChosen.size(); j++){
-                    final int finalJ = j;
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if(computerChosen.get(finalJ) == redButton) {
-                                redButtonChange(redButton, 100);
-                            }
-                            if(computerChosen.get(finalJ) == yellowButton) {
-                                yellowButtonChange(yellowButton, 100);
-                            }
-                            if(computerChosen.get(finalJ) == greenButton) {
-                                greenButtonChange(greenButton, 100);
-                            }
-                            if(computerChosen.get(finalJ) == blueButton) {
-                                blueButtonChange(blueButton, 100);
-                            }
-                        }
-                    }, 1000);
+                    switch (sequenceToCopy[elementToPlay]) {
+                        case 1:
+                            b1.setBackgroundColor(Color.BLACK);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    b1.setBackgroundColor(Color.parseColor("#80FF0000"));
+                                }
+                            }, 500);
+                            break;
+                        case 2:
+                            b2.setBackgroundColor(Color.BLACK);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    b2.setBackgroundColor(Color.parseColor("#800000FF"));
+                                }
+                            }, 500);
+                            break;
+                        case 3:
+                            b3.setBackgroundColor(Color.BLACK);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    b3.setBackgroundColor(Color.parseColor("#8000FF00"));
+                                }
+                            }, 500);
+                            break;
+                        case 4:
+                            b4.setBackgroundColor(Color.BLACK);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
+                                }
+                            }, 500);
+                            break;
+                    }
+
+                    elementToPlay++;
+                    if (elementToPlay == difficultyLevel) {
+                        sequenceFinished();
+                    }
                 }
+                myHandler.sendEmptyMessageDelayed(0, 1000);
             }
-        });
-
-        redButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addUserChosen(redButton);
-                redButtonChange(redButton, 100);
-                //checkMatch();
-            }
-        });
-
-        yellowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addUserChosen(yellowButton);
-                yellowButtonChange(yellowButton, 100);
-                //checkMatch();
-            }
-        });
-
-        greenButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addUserChosen(greenButton);
-                greenButtonChange(greenButton, 100);
-                //checkMatch();
-            }
-        });
-
-        blueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addUserChosen(blueButton);
-                blueButtonChange(blueButton, 100);
-                //checkMatch();
-            }
-        });
+        };
+        myHandler.sendEmptyMessage(0);
+        playASequence();
     }
 
-    public void checkMatch() {
-        if(computerChosen.get(score) == userChosen.get(score)) {
-            match = true;
+    @Override
+    public void onClick(View v) {
+
+    }
+
+    public void createSequence() {
+        Random randInt = new Random();
+        int ourRandom;
+        for (int i = 0; i < difficultyLevel; i++) {
+            //get random 1-4
+            ourRandom = randInt.nextInt(4);
+            ourRandom++;
+            sequenceToCopy[i] = ourRandom;
+            System.out.println("ALEX sequence is " + sequenceToCopy[i]);
         }
-        else {match = false;}
     }
 
-    public void addUserChosen(Button e) {
-        userChosen.add(e);
+    public void playASequence() {
+        createSequence();
+        isResponding = false; //time for computer to respond
+        elementToPlay = 0;
+        playerResponses = 0;
+        playSequence = true; //immediately starts thread block
     }
 
-    public void redButtonChange(final Button e, int time){
-        e.setBackgroundColor(Color.parseColor("#FF8A33"));
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                e.setBackgroundColor(Color.parseColor("#FF4933"));
-            }
-        }, time);
+    public void sequenceFinished() {
+        playSequence = false; //immediately ends thread block
+        unhighlight(); //set buttons to original state
+        Toast.makeText(this, "Your Turn", Toast.LENGTH_SHORT);
+        isResponding = true; //time for player to respond
     }
-
-    public void yellowButtonChange(final Button e, int time){
-        e.setBackgroundColor(Color.parseColor("#FFC133"));
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                e.setBackgroundColor(Color.parseColor("#D7FF33"));
-            }
-        }, time);
-    }
-
-    public void greenButtonChange(final Button e, int time){
-        e.setBackgroundColor(Color.parseColor("#DDFF33"));
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                e.setBackgroundColor(Color.parseColor("#33FF46"));
-            }
-        }, time);
-    }
-
-    public void blueButtonChange(final Button e, int time){
-        e.setBackgroundColor(Color.parseColor("#3380FF"));
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                e.setBackgroundColor(Color.parseColor("#3349FF"));
-            }
-        }, time);
+    private void unhighlight() {
+        b1.setBackgroundColor(Color.parseColor("#80FF0000"));
+        b2.setBackgroundColor(Color.parseColor("#800000FF"));
+        b3.setBackgroundColor(Color.parseColor("#8000FF00"));
+        b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
     }
 }
+
