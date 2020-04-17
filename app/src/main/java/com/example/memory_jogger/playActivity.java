@@ -19,7 +19,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
     TextView score;
     Button b1, b2, b3, b4, start;
 
-    int difficultyLevel = 7;
+    int difficultyLevel = 3;
     int[] sequenceToCopy = new int[10];
 
     private Handler myHandler;
@@ -67,7 +67,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b1.setBackgroundColor(Color.parseColor("#80FF0000"));
+                                    unhighlight();
                                 }
                             }, 500);
                             break;
@@ -76,7 +76,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b2.setBackgroundColor(Color.parseColor("#800000FF"));
+                                    unhighlight();
                                 }
                             }, 500);
                             break;
@@ -85,7 +85,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b3.setBackgroundColor(Color.parseColor("#8000FF00"));
+                                    unhighlight();
                                 }
                             }, 500);
                             break;
@@ -94,14 +94,14 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
+                                    unhighlight();
                                 }
                             }, 500);
                             break;
                     }
 
                     elementToPlay++;
-                    if (elementToPlay == difficultyLevel) {
+                    if (elementToPlay == difficultyLevel-1) {
                         sequenceFinished();
                     }
                 }
@@ -114,40 +114,132 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        if (!playSequence) {     //checks if sequence is currently running
+            switch (v.getId()) {
+                //case statements go here
+                case R.id.blueButton:
+                    b1.setBackgroundColor(Color.BLACK);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            unhighlight();
+                        }
+                    }, 250);
+                    checkElement(1);
+                    break;
+                case R.id.redButton:
+                    b2.setBackgroundColor(Color.BLACK);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            unhighlight();
+                        }
+                    }, 250);
+                    checkElement(2);
+                    break;
+                case R.id.greenButton:
+                    b3.setBackgroundColor(Color.BLACK);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            unhighlight();
+                        }
+                    }, 250);
+                    checkElement(3);
+                    break;
+                case R.id.yellowButton:
+                    b4.setBackgroundColor(Color.BLACK);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            unhighlight();
+                        }
+                    }, 250);
+                    checkElement(4);
+                    break;
+                case R.id.startButton:
+                    difficultyLevel = 3; //default starting value for debugging
+                    playerScore = 0;
+                    playASequence();
+                    break;
 
+            }
+        }
     }
 
+    /**
+     * Populates the sequenceToCopy array with random numbers 1-4
+     * Should only be called once per game
+     */
     public void createSequence() {
         Random randInt = new Random();
         int ourRandom;
-        for (int i = 0; i < difficultyLevel; i++) {
+        for (int i = 0; i < sequenceToCopy.length; i++) {
             //get random 1-4
             ourRandom = randInt.nextInt(4);
             ourRandom++;
             sequenceToCopy[i] = ourRandom;
-            System.out.println("ALEX sequence is " + sequenceToCopy[i]);
+        }
+        //DEBUGGING CODE IGNORE
+        System.out.println("ALEX sequenceToCopy length is " + sequenceToCopy.length);
+        System.out.println("ALEX Now printing the sequence:");
+        for (int i = 0; i < sequenceToCopy.length; i++) {
+            System.out.println("ALEX Index: " + i + "    Random: " + sequenceToCopy[i]);
         }
     }
 
     public void playASequence() {
-        createSequence();
+        if (playerScore <= 0) {
+            createSequence();       //generate new random sequence
+            playerResponses = 0;    //reset # responses
+        }
+
         isResponding = false; //time for computer to respond
         elementToPlay = 0;
-        playerResponses = 0;
-        playSequence = true; //immediately starts thread block
+        playSequence = true; //immediately starts thread handler block
+    }
+
+    /**
+     * Checks users choice against array of randoms
+     *
+     */
+    public void checkElement(int thisElement) {
+        if (isResponding) {
+            playerResponses++;
+            if (sequenceToCopy[playerResponses - 1] == thisElement) {
+                //if correct guess
+                if (playerResponses == difficultyLevel) {
+                    //got entire sequence correct
+                    isResponding = false;
+                    difficultyLevel++;
+                    playerScore = playerScore +1;   //increment score
+                    Toast.makeText(this, "Good job, next level...", Toast.LENGTH_LONG).show();
+                    playASequence();
+                }
+            } else {
+                //if wrong guess
+                Toast.makeText(this, "YOU LOSE!", Toast.LENGTH_LONG).show();
+                isResponding = false;
+            }
+        }
     }
 
     public void sequenceFinished() {
         playSequence = false; //immediately ends thread block
-        unhighlight(); //set buttons to original state
-        Toast.makeText(this, "Your Turn", Toast.LENGTH_SHORT);
-        isResponding = true; //time for player to respond
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                unhighlight();
+            }
+        }, 400);
+        Toast.makeText(this, "Your Turn...", Toast.LENGTH_LONG).show();
+        isResponding = true;
     }
+
     private void unhighlight() {
-        b1.setBackgroundColor(Color.parseColor("#80FF0000"));
-        b2.setBackgroundColor(Color.parseColor("#800000FF"));
-        b3.setBackgroundColor(Color.parseColor("#8000FF00"));
-        b4.setBackgroundColor(Color.parseColor("#80FFFF00"));
+        b1.setBackgroundColor(Color.parseColor("#3349FF"));
+        b2.setBackgroundColor(Color.parseColor("#FF4933"));
+        b3.setBackgroundColor(Color.parseColor("#33FF46"));
+        b4.setBackgroundColor(Color.parseColor("#D7FF33"));
     }
 }
-
