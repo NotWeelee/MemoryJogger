@@ -19,7 +19,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
     TextView score;
     Button b1, b2, b3, b4, start;
 
-    int difficultyLevel = 3;
+    int difficultyLevel;
     int[] sequenceToCopy = new int[10];
 
     private Handler myHandler;
@@ -28,8 +28,8 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
 
     //For Checking Player Answers
     int playerResponses;
-    int playerScore = 0;
-    boolean isResponding;
+    int playerScore;
+    boolean isResponding; //if true
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +64,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                     switch (sequenceToCopy[elementToPlay]) {
                         case 1:
                             b1.setBackgroundColor(Color.BLACK);
+                            System.out.println("ALEX button 1 being played");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -73,6 +74,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             break;
                         case 2:
                             b2.setBackgroundColor(Color.BLACK);
+                            System.out.println("ALEX button 2 being played");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -82,6 +84,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             break;
                         case 3:
                             b3.setBackgroundColor(Color.BLACK);
+                            System.out.println("ALEX button 3 being played");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -91,6 +94,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             break;
                         case 4:
                             b4.setBackgroundColor(Color.BLACK);
+                            System.out.println("ALEX button 4 being played");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -101,7 +105,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                     }
 
                     elementToPlay++;
-                    if (elementToPlay == difficultyLevel-1) {
+                    if (elementToPlay == difficultyLevel) {
                         sequenceFinished();
                     }
                 }
@@ -109,14 +113,12 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         myHandler.sendEmptyMessage(0);
-        playASequence();
     }
 
     @Override
     public void onClick(View v) {
         if (!playSequence) {     //checks if sequence is currently running
             switch (v.getId()) {
-                //case statements go here
                 case R.id.blueButton:
                     b1.setBackgroundColor(Color.BLACK);
                     new Handler().postDelayed(new Runnable() {
@@ -158,8 +160,9 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                     checkElement(4);
                     break;
                 case R.id.startButton:
-                    difficultyLevel = 3; //default starting value for debugging
+                    difficultyLevel = 1; //default starting value for debugging
                     playerScore = 0;
+                    score.setText("Score: " + playerScore);
                     playASequence();
                     break;
 
@@ -174,6 +177,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
     public void createSequence() {
         Random randInt = new Random();
         int ourRandom;
+
         for (int i = 0; i < sequenceToCopy.length; i++) {
             //get random 1-4
             ourRandom = randInt.nextInt(4);
@@ -184,11 +188,12 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
         System.out.println("ALEX sequenceToCopy length is " + sequenceToCopy.length);
         System.out.println("ALEX Now printing the sequence:");
         for (int i = 0; i < sequenceToCopy.length; i++) {
-            System.out.println("ALEX Index: " + i + "    Random: " + sequenceToCopy[i]);
+            System.out.println("ALEX Index: " + i + "    Random #: " + sequenceToCopy[i]);
         }
     }
 
     public void playASequence() {
+        disableButtons();
         if (playerScore <= 0) {
             createSequence();       //generate new random sequence
             playerResponses = 0;    //reset # responses
@@ -201,7 +206,6 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Checks users choice against array of randoms
-     *
      */
     public void checkElement(int thisElement) {
         if (isResponding) {
@@ -210,15 +214,25 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                 //if correct guess
                 if (playerResponses == difficultyLevel) {
                     //got entire sequence correct
+                    System.out.println("ALEX got entire sequence correct");
                     isResponding = false;
                     difficultyLevel++;
-                    playerScore = playerScore +1;   //increment score
-                    Toast.makeText(this, "Good job, next level...", Toast.LENGTH_LONG).show();
-                    playASequence();
+                    playerScore = playerScore + 1;   //increment score
+                    score.setText("Score: " + playerScore);
+                    Toast.makeText(this, "Good job, next level...", Toast.LENGTH_SHORT).show();
+
+                    if (playerScore == sequenceToCopy.length) {
+                        Toast.makeText(this, "YOU WIN!", Toast.LENGTH_LONG*5).show();
+                        disableButtons();
+
+                    } else {
+                        playASequence();
+                    }
                 }
             } else {
                 //if wrong guess
-                Toast.makeText(this, "YOU LOSE!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "YOU LOSE!", Toast.LENGTH_LONG * 4).show();
+                disableButtons();
                 isResponding = false;
             }
         }
@@ -226,14 +240,17 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
 
     public void sequenceFinished() {
         playSequence = false; //immediately ends thread block
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                unhighlight();
-            }
-        }, 400);
-        Toast.makeText(this, "Your Turn...", Toast.LENGTH_LONG).show();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                unhighlight();
+//            }
+//        }, 800);
+        Toast.makeText(this, "Your Turn...", Toast.LENGTH_LONG * 2).show();
+
+        playerResponses = 0;
         isResponding = true;
+        enableButtons();
     }
 
     private void unhighlight() {
@@ -241,5 +258,19 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
         b2.setBackgroundColor(Color.parseColor("#FF4933"));
         b3.setBackgroundColor(Color.parseColor("#33FF46"));
         b4.setBackgroundColor(Color.parseColor("#D7FF33"));
+    }
+
+    private void disableButtons() {
+        b1.setEnabled(false);
+        b2.setEnabled(false);
+        b3.setEnabled(false);
+        b4.setEnabled(false);
+    }
+
+    private void enableButtons() {
+        b1.setEnabled(true);
+        b2.setEnabled(true);
+        b3.setEnabled(true);
+        b4.setEnabled(true);
     }
 }
