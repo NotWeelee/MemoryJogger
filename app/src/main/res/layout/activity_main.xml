@@ -95,7 +95,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:layout_marginBottom="125dp"
-        android:background="@android:color/holo_blue_bright"
+        android:background="@drawable/button_pressed"
         android:fontFamily="@font/holtwood_one_sc"
         android:gravity="center"
         android:text="@string/start"

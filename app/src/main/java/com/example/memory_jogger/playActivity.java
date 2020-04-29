@@ -12,9 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Random;
 
-public class playActivity extends AppCompatActivity implements View.OnClickListener {
+public class playActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView score;
     Button b1, b2, b3, b4, start;

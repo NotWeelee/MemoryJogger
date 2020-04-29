@@ -15,12 +15,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quick_menu);
 
-        Button playmenubutton = (Button) findViewById(R.id.playMenuButton);
+        Button playMenuButton = (Button) findViewById(R.id.playMenuButton);
+        Button highScoreButton = (Button) findViewById(R.id.highScoreButton);
 
-        playmenubutton.setOnClickListener(new View.OnClickListener() {
+        playMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openActivityPlay();
+            }
+        });
+
+        highScoreButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivityHighScore();
             }
         });
 
@@ -28,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openActivityPlay(){
         Intent intent = new Intent(this, playActivity.class);
+        startActivity(intent);
+    }
+
+    public void openActivityHighScore() {
+        Intent intent = new Intent(this, highScoreActivity.class);
         startActivity(intent);
     }
 }

@@ -5,4 +5,12 @@
     <string name="score">score</string>
     <string name="scoreNum">0</string>
     <string name="play">PLAY</string>
+    <string name="highscores">highscores</string>
+    <string name="standard">standard</string>
+    <string name="endless">endless</string>
+    <string name="easy">easy</string>
+    <string name="medium">medium</string>
+    <string name="hard">hard</string>
+    <string name="player">player</string>
+    <string name="back">back</string>
 </resources>
