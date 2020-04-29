@@ -141,7 +141,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/holtwood_one_sc"
                 android:gravity="center_horizontal"
-                android:text="@string/score"
+                android:text="@string/highscore"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large" />
         </LinearLayout>
 
