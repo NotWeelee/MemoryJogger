@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".highScoreActivity"></activity>
+        <activity
+            android:name=".setHighScoreActivity"
+            android:label="@string/title_activity_set_high_score"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".highScoreActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

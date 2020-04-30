@@ -19,9 +19,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class highScoreActivity extends AppCompatActivity {
-
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
-
+    //Setting up some variables
     TextView playerOne, playerTwo, playerThree, playerFour, playerFive;
     TextView scoreOne, scoreTwo, scoreThree, scoreFour, scoreFive;
     Button standardButton, endlessButton, easyButton, mediumButton, hardButton, backButton;
@@ -31,6 +29,7 @@ public class highScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
 
+        //Assign variables to the buttons and textViews
         playerOne = (TextView) findViewById(R.id.playerOne);
         playerTwo = (TextView) findViewById(R.id.playerTwo);
         playerThree = (TextView) findViewById(R.id.playerThree);
@@ -50,6 +49,7 @@ public class highScoreActivity extends AppCompatActivity {
         hardButton = (Button) findViewById(R.id.hardButton);
         backButton = (Button) findViewById(R.id.backButton);
 
+        //Set difficulty button invisible to start with
         easyButton.setVisibility(View.GONE);
         mediumButton.setVisibility(View.GONE);
         hardButton.setVisibility(View.GONE);
@@ -57,7 +57,7 @@ public class highScoreActivity extends AppCompatActivity {
         standardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.startAnimation(buttonClick);
+                //Set difficulty buttons visible when user choses to view Standard High Scores
                 easyButton.setVisibility(View.VISIBLE);
                 mediumButton.setVisibility(View.VISIBLE);
                 hardButton.setVisibility(View.VISIBLE);
@@ -85,6 +85,7 @@ public class highScoreActivity extends AppCompatActivity {
             }
         });
 
+        //Set difficulty buttons to invisible and display endless scores
         endlessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,6 +96,7 @@ public class highScoreActivity extends AppCompatActivity {
             }
         });
 
+        //Return to Main Menu
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,6 +263,19 @@ public class highScoreActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void clearHighscoreScreen() {
+        playerOne.setText("");
+        playerTwo.setText("");
+        playerThree.setText("");
+        playerFour.setText("");
+        playerFive.setText("");
+        scoreOne.setText("");
+        scoreTwo.setText("");
+        scoreThree.setText("");
+        scoreFour.setText("");
+        scoreFive.setText("");
     }
 
     public void openActivityMain(){
