@@ -12,9 +12,16 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 public class setHighScoreActivity extends AppCompatActivity {
 
@@ -51,9 +58,16 @@ public class setHighScoreActivity extends AppCompatActivity {
         playerScore = bundle.getInt("playerScore");
         yourScore.setText(Integer.toString(playerScore));
 
+
+        updateHighScores();
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                try {
+                    updateDatabase();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
                 returnToMain();
             }
         });
@@ -161,11 +175,37 @@ public class setHighScoreActivity extends AppCompatActivity {
         }
     }
 
-    private void checkHighScores() {
+    private int[] updateHighScoreArray(int[] scores, int pos, int num) {
+        int[] temp = new int[5];
+        for(int i = 0; i < pos; i++) {
+            temp[i] = scores[i];
+        }
+        temp[pos] = num;
+        for(int i = pos + 1; i < 5; i++) {
+            temp[i] = scores[i - 1];
+        }
+        return temp;
+    }
+
+    private void updateHighScores(){
         for(int i = 0; i < 5; i++) {
             if(playerScore > easyHighScores[i]) {
-
+                easyHighScores = updateHighScoreArray(easyHighScores, i, playerScore);
+                highScoreStatement.setText("You set a high score!");
             }
+            else{
+                highScoreStatement.setText("Good Game!");
+            }
+        }
+    }
+
+    private void updateDatabase() throws IOException {
+        FileWriter fw = new FileWriter(new File("../../assets/easyStandardScores.txt"), false);
+        for(int i = 0; i < 5; i++) {
+            fw.write(easyHighPlayers[i]);
+            fw.write("\n");
+            fw.write(easyHighScores[i]);
+            fw.write("\n");
         }
     }
 
