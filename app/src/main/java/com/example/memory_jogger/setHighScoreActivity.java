@@ -1,17 +1,15 @@
 package com.example.memory_jogger;
 
-import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,17 +47,16 @@ public class setHighScoreActivity extends AppCompatActivity {
         playerName = (EditText) findViewById(R.id.playerName);
         submitButton = (Button) findViewById(R.id.submitButton);
 
-        Bundle extras = getIntent().getExtras();
-        if(extras != null) {
-            playerScore = extras.getInt("playerScore");
-        }
+        Bundle bundle = getIntent().getExtras();
+        playerScore = bundle.getInt("playerScore");
+        yourScore.setText(Integer.toString(playerScore));
 
-
-    }
-
-    protected void onStart() {
-        super.onStart();
-
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                returnToMain();
+            }
+        });
     }
 
     private void putHighScoresInArray() {
@@ -165,6 +162,15 @@ public class setHighScoreActivity extends AppCompatActivity {
     }
 
     private void checkHighScores() {
+        for(int i = 0; i < 5; i++) {
+            if(playerScore > easyHighScores[i]) {
 
+            }
+        }
+    }
+
+    private void returnToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

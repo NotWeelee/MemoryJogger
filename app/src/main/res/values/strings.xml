@@ -25,4 +25,5 @@
     <string name="your_score">YOUR SCORE</string>
     <string name="your_name">your name</string>
     <string name="submit">submit</string>
+    <string name="play_again">play again</string>
 </resources>
