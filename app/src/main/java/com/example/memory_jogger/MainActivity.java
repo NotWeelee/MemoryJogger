@@ -15,8 +15,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quick_menu);
 
-        Button playMenuButton = (Button) findViewById(R.id.normalButton);
+        Button playMenuButton = (Button) findViewById(R.id.standardButton);
         Button highScoreButton = (Button) findViewById(R.id.highScoreButton);
+        Button howToPlayButton = (Button) findViewById(R.id.howToPlayButton);
 
         playMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,15 +32,27 @@ public class MainActivity extends AppCompatActivity {
                 openActivityHighScore();
             }
         });
+
+        howToPlayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openHowToPlay();
+            }
+        });
     }
 
     public void openActivityPlay(){
-        Intent intent = new Intent(this, playActivity.class);
+        Intent intent = new Intent(this, modeSelectActivity.class);
         startActivity(intent);
     }
 
     public void openActivityHighScore() {
         Intent intent = new Intent(this, highScoreActivity.class);
+        startActivity(intent);
+    }
+
+    public void openHowToPlay() {
+        Intent intent = new Intent(this, howToPlayActivity.class);
         startActivity(intent);
     }
 }

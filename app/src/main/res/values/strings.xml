@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Memory_Jogger</string>
-    <string name="start">Start</string> 
+    <string name="start">start</string>
     <string name="_0">0</string>
-    <string name="score">Score:</string>
+    <string name="score">score:</string>
     <string name="title">Memory Jogger</string>
     <string name="highscore">score</string>
     <string name="scoreNum">0</string>
@@ -24,9 +24,14 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="your_score">YOUR SCORE</string>
+    <string name="your_score">your score</string>
     <string name="your_name">your name</string>
     <string name="submit">submit</string>
     <string name="play_again">play again</string>
-    <string name="reset_scores">RESET SCORES</string>
+    <string name="reset_scores">reset scores</string>
+    <string name="how_to_play">how to play</string>
+    <string name="mainInstructions">tap on the squares in the same sequence that is shown to you</string>
+    <string name="get_10_buttons_in_a_row_without_messing_up">get 10 buttons in a row without messing up!</string>
+    <string name="there_s_no_end_to_the_madness_keep_going_until_you_lose">there\'s no end to the madness! Keep going until you lose!</string>
+    <string name="pick_your_mode">pick your mode</string>
 </resources>

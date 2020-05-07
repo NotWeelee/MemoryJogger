@@ -21,7 +21,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Random;
 
-public class playActivity extends AppCompatActivity implements View.OnClickListener{
+public class endlessPlayActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView score;
     Button b1, b2, b3, b4, start, back;
