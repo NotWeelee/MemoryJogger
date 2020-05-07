@@ -8,22 +8,21 @@
     android:background="@drawable/background">
 
     <Button
-        android:id="@+id/instructionsButton"
-        android:layout_width="300dp"
-        android:layout_height="75dp"
-        android:layout_marginTop="65dp"
-        android:layout_marginBottom="16dp"
+        android:id="@+id/backButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:background="@drawable/button_pressed"
         android:fontFamily="@font/holtwood_one_sc"
-        android:text="Instructions"
+        android:text="@string/back"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="22sp"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/highScoreButton"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/endlessButton"
+        app:layout_constraintVertical_bias="0.909" />
 
     <Button
         android:id="@+id/normalButton"
@@ -37,7 +36,6 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/button_pressed"
         android:fontFamily="@font/holtwood_one_sc"
-        android:text="@string/play"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@android:color/black"
         android:textSize="22sp"
@@ -46,23 +44,44 @@
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.182" />
+        app:layout_constraintVertical_bias="0.281"
+        tools:text="Normal" />
 
     <Button
-        android:id="@+id/highScoreButton"
+        android:id="@+id/endlessButton"
         android:layout_width="300dp"
         android:layout_height="75dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button_pressed"
         android:fontFamily="@font/holtwood_one_sc"
-        android:text="@string/highscores"
+        android:text="@string/endless"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@android:color/black"
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/normalButton"
-        app:layout_constraintVertical_bias="0.185" />
+        app:layout_constraintVertical_bias="0.063" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/holtwood_one_sc"
+        android:text="Pick Your mode"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/normalButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.158" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

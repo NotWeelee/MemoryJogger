@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.quick_menu);
 
-        Button playMenuButton = (Button) findViewById(R.id.playMenuButton);
+        Button playMenuButton = (Button) findViewById(R.id.normalButton);
         Button highScoreButton = (Button) findViewById(R.id.highScoreButton);
 
         playMenuButton.setOnClickListener(new View.OnClickListener() {
