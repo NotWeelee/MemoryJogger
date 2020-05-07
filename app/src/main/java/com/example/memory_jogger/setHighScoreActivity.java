@@ -124,14 +124,6 @@ public class setHighScoreActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
                 checkForHighScore();
                 updateSharedPrefs();
-                System.out.println("PREF playerOne is " + sharedPreferences.getString(playerOne, ""));
-                System.out.println("ARRAY highPlayerOne is " + highPlayers[0]);
-                System.out.println("PREF playerOneEndless is " + sharedPreferences.getString(playerOneEndless, ""));
-                System.out.println("ARRAY highPlayerOneEndless is " + highPlayersEndless[0]);
-                System.out.println("PREF scoreOne is " + sharedPreferences.getString(scoreOne, ""));
-                System.out.println("ARRAY highScoreOne is " + highScores[0]);
-                System.out.println("PREF scoreOneEndless is " + sharedPreferences.getString(scoreOneEndless, ""));
-                System.out.println("ARRAY highScoreOneEndless is " + highScoresEndless[0]);
                 returnToMain();
 
             }
