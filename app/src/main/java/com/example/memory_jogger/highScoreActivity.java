@@ -3,267 +3,170 @@ package com.example.memory_jogger;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
 public class highScoreActivity extends AppCompatActivity {
+    //Setting up some variables
+    TextView playerOneView, playerTwoView, playerThreeView, playerFourView, playerFiveView;
+    TextView scoreOneView, scoreTwoView, scoreThreeView, scoreFourView, scoreFiveView;
+    Button standardButton, endlessButton, resetScoresButton, backButton;
 
-    private AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.8F);
+    public static final String sharedPrefs = "sharedPrefs";
 
-    TextView playerOne, playerTwo, playerThree, playerFour, playerFive;
-    TextView scoreOne, scoreTwo, scoreThree, scoreFour, scoreFive;
-    Button standardButton, endlessButton, easyButton, mediumButton, hardButton, backButton;
+    public static final String playerOne = "playerOne";
+    public static final String playerTwo = "playerTwo";
+    public static final String playerThree = "playerThree";
+    public static final String playerFour = "playerFour";
+    public static final String playerFive = "playerFive";
+
+    public static final String scoreOne = "scoreOne";
+    public static final String scoreTwo = "scoreTwo";
+    public static final String scoreThree = "scoreThree";
+    public static final String scoreFour = "scoreFour";
+    public static final String scoreFive = "scoreFive";
+
+    public static final String playerOneEndless = "playerOne";
+    public static final String playerTwoEndless = "playerTwo";
+    public static final String playerThreeEndless = "playerThree";
+    public static final String playerFourEndless = "playerFour";
+    public static final String playerFiveEndless = "playerFive";
+
+    public static final String scoreOneEndless = "scoreOne";
+    public static final String scoreTwoEndless = "scoreTwo";
+    public static final String scoreThreeEndless = "scoreThree";
+    public static final String scoreFourEndless = "scoreFour";
+    public static final String scoreFiveEndless = "scoreFive";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_high_score);
 
-        playerOne = (TextView) findViewById(R.id.playerOne);
-        playerTwo = (TextView) findViewById(R.id.playerTwo);
-        playerThree = (TextView) findViewById(R.id.playerThree);
-        playerFour = (TextView) findViewById(R.id.playerFour);
-        playerFive = (TextView) findViewById(R.id.playerFive);
+        //Assign variables to the buttons and textViews
+        playerOneView = (TextView) findViewById(R.id.playerOne);
+        playerTwoView = (TextView) findViewById(R.id.playerTwo);
+        playerThreeView = (TextView) findViewById(R.id.playerThree);
+        playerFourView = (TextView) findViewById(R.id.playerFour);
+        playerFiveView = (TextView) findViewById(R.id.playerFive);
 
-        scoreOne = (TextView) findViewById(R.id.scoreOne);
-        scoreTwo = (TextView) findViewById(R.id.scoreTwo);
-        scoreThree = (TextView) findViewById(R.id.scoreThree);
-        scoreFour = (TextView) findViewById(R.id.scoreFour);
-        scoreFive = (TextView) findViewById(R.id.scoreFive);
+        scoreOneView = (TextView) findViewById(R.id.scoreOne);
+        scoreTwoView = (TextView) findViewById(R.id.scoreTwo);
+        scoreThreeView = (TextView) findViewById(R.id.scoreThree);
+        scoreFourView = (TextView) findViewById(R.id.scoreFour);
+        scoreFiveView = (TextView) findViewById(R.id.scoreFive);
 
         standardButton = (Button) findViewById(R.id.standardScoreButton);
         endlessButton = (Button) findViewById(R.id.endlessScoreButton);
-        easyButton = (Button) findViewById(R.id.easyButton);
-        mediumButton = (Button) findViewById(R.id.mediumButton);
-        hardButton = (Button) findViewById(R.id.hardButton);
-        backButton = (Button) findViewById(R.id.backButton);
 
-        easyButton.setVisibility(View.GONE);
-        mediumButton.setVisibility(View.GONE);
-        hardButton.setVisibility(View.GONE);
+        backButton = (Button) findViewById(R.id.backButton);
+        resetScoresButton= (Button) findViewById(R.id.resetHighScores);
 
         standardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                v.startAnimation(buttonClick);
-                easyButton.setVisibility(View.VISIBLE);
-                mediumButton.setVisibility(View.VISIBLE);
-                hardButton.setVisibility(View.VISIBLE);
-
-                easyButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showEasyHighScores();
-                    }
-                });
-
-                mediumButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showMediumHighScores();
-                    }
-                });
-
-                hardButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showHardHighScores();
-                    }
-                });
+                showHighScores();
             }
         });
 
         endlessButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                easyButton.setVisibility(View.GONE);
-                mediumButton.setVisibility(View.GONE);
-                hardButton.setVisibility(View.GONE);
+                clearHighScoreScreen();
                 showEndlessHighScores();
             }
         });
 
+        resetScoresButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putString(playerOne, "");
+                editor.putString(playerTwo, "");
+                editor.putString(playerThree, "");
+                editor.putString(playerFour, "");
+                editor.putString(playerFive, "");
+
+                editor.putString(scoreOne, "");
+                editor.putString(scoreTwo, "");
+                editor.putString(scoreThree, "");
+                editor.putString(scoreFour, "");
+                editor.putString(scoreFive, "");
+
+                editor.putString(playerOneEndless, "");
+                editor.putString(playerTwoEndless, "");
+                editor.putString(playerThreeEndless, "");
+                editor.putString(playerFourEndless, "");
+                editor.putString(playerFiveEndless, "");
+
+                editor.putString(scoreOneEndless, "");
+                editor.putString(scoreTwoEndless, "");
+                editor.putString(scoreThreeEndless, "");
+                editor.putString(scoreFourEndless, "");
+                editor.putString(scoreFiveEndless, "");
+
+                editor.apply();
+                clearHighScoreScreen();
+            }
+        });
+
+        //Return to Main Menu
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearHighScoreScreen();
                 openActivityMain();
             }
         });
     }
 
-    public void showEasyHighScores() {
-        try{
-            InputStream iS = getResources().getAssets().open("easyStandardScores.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(iS));
-            String line;
-            if((line = br.readLine()) != null) {
-                playerOne.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreOne.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerTwo.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreTwo.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerThree.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreThree.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerFour.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreFour.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerFive.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreFive.setText(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void showHighScores(){
+        SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
+        playerOneView.setText(sharedPreferences.getString(playerOne,""));
+        playerTwoView.setText(sharedPreferences.getString(playerTwo,""));
+        playerThreeView.setText(sharedPreferences.getString(playerThree,""));
+        playerFourView.setText(sharedPreferences.getString(playerFour,""));
+        playerFiveView.setText(sharedPreferences.getString(playerFive,""));
+        scoreOneView.setText(sharedPreferences.getString(scoreOne,""));
+        scoreTwoView.setText(sharedPreferences.getString(scoreTwo,""));
+        scoreThreeView.setText(sharedPreferences.getString(scoreThree,""));
+        scoreFourView.setText(sharedPreferences.getString(scoreFour,""));
+        scoreFiveView.setText(sharedPreferences.getString(scoreFive,""));
     }
 
-    public void showMediumHighScores() {
-        try{
-            InputStream iS = getResources().getAssets().open("mediumStandardScores.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(iS));
-            String line;
-            if((line = br.readLine()) != null) {
-                playerOne.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreOne.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerTwo.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreTwo.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerThree.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreThree.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerFour.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreFour.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerFive.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreFive.setText(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void showEndlessHighScores(){
+        SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
+        playerOneView.setText(sharedPreferences.getString(playerOneEndless,""));
+        playerTwoView.setText(sharedPreferences.getString(playerTwoEndless,""));
+        playerThreeView.setText(sharedPreferences.getString(playerThreeEndless,""));
+        playerFourView.setText(sharedPreferences.getString(playerFourEndless,""));
+        playerFiveView.setText(sharedPreferences.getString(playerFiveEndless,""));
+        scoreOneView.setText(sharedPreferences.getString(scoreOneEndless,""));
+        scoreTwoView.setText(sharedPreferences.getString(scoreTwoEndless,""));
+        scoreThreeView.setText(sharedPreferences.getString(scoreThreeEndless,""));
+        scoreFourView.setText(sharedPreferences.getString(scoreFourEndless,""));
+        scoreFiveView.setText(sharedPreferences.getString(scoreFiveEndless,""));
     }
 
-    public void showHardHighScores() {
-        try{
-            InputStream iS = getResources().getAssets().open("hardStandardScores.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(iS));
-            String line;
-            if((line = br.readLine()) != null) {
-                playerOne.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreOne.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerTwo.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreTwo.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerThree.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreThree.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerFour.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreFour.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerFive.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreFive.setText(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void clearHighScoreScreen() {
+        playerOneView.setText("");
+        playerTwoView.setText("");
+        playerThreeView.setText("");
+        playerFourView.setText("");
+        playerFiveView.setText("");
+        scoreOneView.setText("");
+        scoreTwoView.setText("");
+        scoreThreeView.setText("");
+        scoreFourView.setText("");
+        scoreFiveView.setText("");
     }
 
-    public void showEndlessHighScores() {
-        try{
-            InputStream iS = getResources().getAssets().open("endlessScores.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(iS));
-            String line;
-            if((line = br.readLine()) != null) {
-                playerOne.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreOne.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerTwo.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreTwo.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerThree.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreThree.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerFour.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreFour.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                playerFive.setText(line);
-            }
-            if((line = br.readLine()) != null) {
-                scoreFive.setText(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void openActivityMain(){
+    public void openActivityMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
