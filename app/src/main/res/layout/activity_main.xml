@@ -58,7 +58,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="175dp"
                 android:layout_height="175dp"
-                android:background="#FF4933" />
+                android:background="#FF3333" />
         </LinearLayout>
 
         <LinearLayout
@@ -73,7 +73,7 @@
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="175dp"
                 android:layout_height="175dp"
-                android:background="#33FF46" />
+                android:background="#33FF33" />
 
             <Button
                 android:id="@+id/yellowButton"

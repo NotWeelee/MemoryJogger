@@ -1,6 +1,7 @@
 package com.example.memory_jogger;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,6 +67,12 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
                 goToMain();
             }
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("mode","endless");
+        editor.apply();
 
         //This code defines the thread
         myHandler = new android.os.Handler() {

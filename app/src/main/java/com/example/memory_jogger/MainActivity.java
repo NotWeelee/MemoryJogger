@@ -1,6 +1,7 @@
 package com.example.memory_jogger;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
                 openHowToPlay();
             }
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("mode","");
+        editor.apply();
     }
 
     public void openActivityPlay(){

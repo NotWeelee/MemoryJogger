@@ -52,17 +52,17 @@ public class setHighScoreActivity extends AppCompatActivity {
     public static final String scoreFour = "scoreFour";
     public static final String scoreFive = "scoreFive";
 
-    public static final String playerOneEndless = "playerOne";
-    public static final String playerTwoEndless = "playerTwo";
-    public static final String playerThreeEndless = "playerThree";
-    public static final String playerFourEndless = "playerFour";
-    public static final String playerFiveEndless = "playerFive";
+    public static final String playerOneEndless = "playerOneEndless";
+    public static final String playerTwoEndless = "playerTwoEndless";
+    public static final String playerThreeEndless = "playerThreeEndless";
+    public static final String playerFourEndless = "playerFourEndless";
+    public static final String playerFiveEndless = "playerFiveEndless";
 
-    public static final String scoreOneEndless = "scoreOne";
-    public static final String scoreTwoEndless = "scoreTwo";
-    public static final String scoreThreeEndless = "scoreThree";
-    public static final String scoreFourEndless = "scoreFour";
-    public static final String scoreFiveEndless = "scoreFive";
+    public static final String scoreOneEndless = "scoreOneEndless";
+    public static final String scoreTwoEndless = "scoreTwoEndless";
+    public static final String scoreThreeEndless = "scoreThreeEndless";
+    public static final String scoreFourEndless = "scoreFourEndless";
+    public static final String scoreFiveEndless = "scoreFiveEndless";
 
     //Player High Scores
     private String[] highPlayers = new String[5];
@@ -88,107 +88,109 @@ public class setHighScoreActivity extends AppCompatActivity {
         yourScore.setText(playerScoreString);
 
         dataToArray();
-        for(int i = 0; i < 5; i++) {
-            if(highScores[i].equals("") && playerScore != 0) {
-                highScoreStatement.setText("You set a high score!");
-            }
-            else if(!highScores[i].equals("")) {
-                if(playerScore > Integer.parseInt(highScores[i])) {
+        SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
+        if(sharedPreferences.getString("mode","").equals("standard")) {
+            for (int i = 0; i < 5; i++) {
+                if (highScores[i].equals("") && playerScore != 0) {
                     highScoreStatement.setText("You set a high score!");
+                } else if (!highScores[i].equals("")) {
+                    if (playerScore > Integer.parseInt(highScores[i])) {
+                        highScoreStatement.setText("You set a high score!");
+                    }
+                } else {
+                    highScoreStatement.setText("Good Game!");
                 }
-            }
-            else {
-                highScoreStatement.setText("Good Game!");
-            }
 
+            }
+        }
+        if(sharedPreferences.getString("mode","").equals("endless")) {
+            for (int i = 0; i < 5; i++) {
+                if (highScoresEndless[i].equals("") && playerScore != 0) {
+                    highScoreStatement.setText("You set a high score!");
+                } else if (!highScoresEndless[i].equals("")) {
+                    if (playerScore > Integer.parseInt(highScoresEndless[i])) {
+                        highScoreStatement.setText("You set a high score!");
+                    }
+                } else {
+                    highScoreStatement.setText("Good Game!");
+                }
+
+            }
         }
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
                 checkForHighScore();
                 updateSharedPrefs();
+                System.out.println("PREF playerOne is " + sharedPreferences.getString(playerOne, ""));
+                System.out.println("ARRAY highPlayerOne is " + highPlayers[0]);
+                System.out.println("PREF playerOneEndless is " + sharedPreferences.getString(playerOneEndless, ""));
+                System.out.println("ARRAY highPlayerOneEndless is " + highPlayersEndless[0]);
+                System.out.println("PREF scoreOne is " + sharedPreferences.getString(scoreOne, ""));
+                System.out.println("ARRAY highScoreOne is " + highScores[0]);
+                System.out.println("PREF scoreOneEndless is " + sharedPreferences.getString(scoreOneEndless, ""));
+                System.out.println("ARRAY highScoreOneEndless is " + highScoresEndless[0]);
                 returnToMain();
+
             }
         });
     }
 
-    private void saveData() {
-        SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(playerOne, "");
-        editor.putString(playerTwo, "");
-        editor.putString(playerThree, "");
-        editor.putString(playerFour, "");
-        editor.putString(playerFive, "");
-
-        editor.putString(scoreOne, "");
-        editor.putString(scoreTwo, "");
-        editor.putString(scoreThree, "");
-        editor.putString(scoreFour, "");
-        editor.putString(scoreFive, "");
-
-        editor.putString(playerOneEndless, "");
-        editor.putString(playerTwoEndless, "");
-        editor.putString(playerThreeEndless, "");
-        editor.putString(playerFourEndless, "");
-        editor.putString(playerFiveEndless, "");
-
-        editor.putString(scoreOneEndless, "");
-        editor.putString(scoreTwoEndless, "");
-        editor.putString(scoreThreeEndless, "");
-        editor.putString(scoreFourEndless, "");
-        editor.putString(scoreFiveEndless, "");
-    }
-
     private void dataToArray() {
         SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
-        for(int i = 0; i < 5; i++) {
-            if(i == 0) {
-                highPlayers[i] = sharedPreferences.getString(playerOne, "");
-                highScores[i] = sharedPreferences.getString(scoreOne, "");
-                highPlayersEndless[i] = sharedPreferences.getString(playerOneEndless, "");
-                highScoresEndless[i] = sharedPreferences.getString(scoreOneEndless, "");
-            }
-            if(i == 1) {
-                highPlayers[i] = sharedPreferences.getString(playerTwo, "");
-                highScores[i] = sharedPreferences.getString(scoreTwo, "");
-                highPlayersEndless[i] = sharedPreferences.getString(playerTwoEndless, "");
-                highScoresEndless[i] = sharedPreferences.getString(scoreTwoEndless, "");
-            }
-            if(i == 2) {
-                highPlayers[i] = sharedPreferences.getString(playerThree, "");
-                highScores[i] = sharedPreferences.getString(scoreThree, "");
-                highPlayersEndless[i] = sharedPreferences.getString(playerThreeEndless, "");
-                highScoresEndless[i] = sharedPreferences.getString(scoreThreeEndless, "");
-            }
-            if(i == 3) {
-                highPlayers[i] = sharedPreferences.getString(playerFour, "");
-                highScores[i] = sharedPreferences.getString(scoreFour, "");
-                highPlayersEndless[i] = sharedPreferences.getString(playerFourEndless, "");
-                highScoresEndless[i] = sharedPreferences.getString(scoreFourEndless, "");
-            }
-            if(i == 4) {
-                highPlayers[i] = sharedPreferences.getString(playerFive, "");
-                highScores[i] = sharedPreferences.getString(scoreFive, "");
-                highPlayersEndless[i] = sharedPreferences.getString(playerFiveEndless, "");
-                highScoresEndless[i] = sharedPreferences.getString(scoreFiveEndless, "");
-            }
-        }
+        highPlayers[0] = sharedPreferences.getString(playerOne, "");
+        highScores[0] = sharedPreferences.getString(scoreOne, "");
+        highPlayers[1] = sharedPreferences.getString(playerTwo, "");
+        highScores[1] = sharedPreferences.getString(scoreTwo, "");
+        highPlayers[2] = sharedPreferences.getString(playerThree, "");
+        highScores[2] = sharedPreferences.getString(scoreThree, "");
+        highPlayers[3] = sharedPreferences.getString(playerFour, "");
+        highScores[3] = sharedPreferences.getString(scoreFour, "");
+        highPlayers[4] = sharedPreferences.getString(playerFive, "");
+        highScores[4] = sharedPreferences.getString(scoreFive, "");
+
+        highPlayersEndless[0] = sharedPreferences.getString(playerOneEndless, "");
+        highScoresEndless[0] = sharedPreferences.getString(scoreOneEndless, "");
+        highPlayersEndless[1] = sharedPreferences.getString(playerTwoEndless, "");
+        highScoresEndless[1] = sharedPreferences.getString(scoreTwoEndless, "");
+        highPlayersEndless[2] = sharedPreferences.getString(playerThreeEndless, "");
+        highScoresEndless[2] = sharedPreferences.getString(scoreThreeEndless, "");
+        highPlayersEndless[3] = sharedPreferences.getString(playerFourEndless, "");
+        highScoresEndless[3] = sharedPreferences.getString(scoreFourEndless, "");
+        highPlayersEndless[4] = sharedPreferences.getString(playerFiveEndless, "");
+        highScoresEndless[4] = sharedPreferences.getString(scoreFiveEndless, "");
     }
 
     private void checkForHighScore() {
-        for(int i = 0; i < 5; i++) {
-            if(highScores[i].equals("")) {
-                highScores[i] = Integer.toString(playerScore);
-                highPlayers[i] = playerName.getText().toString();
-                break;
+        SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
+        if(sharedPreferences.getString("mode","").equals("standard")) {
+            for(int i = 0; i < 5; i++) {
+                if(highScores[i].equals("")) {
+                    highScores[i] = Integer.toString(playerScore);
+                    highPlayers[i] = playerName.getText().toString();
+                    break;
+                }
+                else if(playerScore > Integer.parseInt(highScores[i])) {
+                    highScores = updateHighScoreArray(highScores, i, playerScore);
+                    highPlayers = updateHighPlayerArray(highPlayers, i, playerName.getText().toString());
+                    break;
+                }
             }
-            else if(playerScore > Integer.parseInt(highScores[i])) {
-                highScores = updateHighScoreArray(highScores, i, playerScore);
-                highPlayers = updateHighPlayerArray(highPlayers, i, playerName.getText().toString());
-                break;
+        }
+        if(sharedPreferences.getString("mode","").equals("endless")) {
+            for(int i = 0; i < 5; i++) {
+                if(highScoresEndless[i].equals("")) {
+                    highScoresEndless[i] = Integer.toString(playerScore);
+                    highPlayersEndless[i] = playerName.getText().toString();
+                    break;
+                }
+                else if(playerScore > Integer.parseInt(highScoresEndless[i])) {
+                    highScoresEndless = updateHighScoreArray(highScoresEndless, i, playerScore);
+                    highPlayersEndless = updateHighPlayerArray(highPlayersEndless, i, playerName.getText().toString());
+                    break;
+                }
             }
         }
     }
@@ -220,29 +222,52 @@ public class setHighScoreActivity extends AppCompatActivity {
     private void updateSharedPrefs() {
         SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        if(highPlayers[0] != null) {
-            editor.putString(playerOne, highPlayers[0]);
-            editor.putString(scoreOne, highScores[0]);
+
+        if(sharedPreferences.getString("mode","").equals("standard")) {
+            if (highPlayers[0] != null) {
+                editor.putString(playerOne, highPlayers[0]);
+                editor.putString(scoreOne, highScores[0]);
+            }
+            if (highPlayers[1] != null) {
+                editor.putString(playerTwo, highPlayers[1]);
+                editor.putString(scoreTwo, highScores[1]);
+            }
+            if (highPlayers[2] != null) {
+                editor.putString(playerThree, highPlayers[2]);
+                editor.putString(scoreThree, highScores[2]);
+            }
+            if (highPlayers[3] != null) {
+                editor.putString(playerFour, highPlayers[3]);
+                editor.putString(scoreFour, highScores[3]);
+            }
+            if (highPlayers[4] != null) {
+                editor.putString(playerFive, highPlayers[4]);
+                editor.putString(scoreFive, highScores[4]);
+            }
             editor.apply();
         }
-        if(highPlayers[1] != null) {
-            editor.putString(playerTwo, highPlayers[1]);
-            editor.putString(scoreTwo, highScores[1]);
-            editor.apply();
-        }
-        if(highPlayers[2] != null) {
-            editor.putString(playerThree, highPlayers[2]);
-            editor.putString(scoreThree, highScores[2]);
-            editor.apply();
-        }
-        if(highPlayers[3] != null) {
-            editor.putString(playerFour, highPlayers[3]);
-            editor.putString(scoreFour, highScores[3]);
-            editor.apply();
-        }
-        if(highPlayers[4] != null) {
-            editor.putString(playerFive, highPlayers[4]);
-            editor.putString(scoreFive, highScores[4]);
+
+        if(sharedPreferences.getString("mode","").equals("endless")) {
+            if (highPlayersEndless[0] != null) {
+                editor.putString(playerOneEndless, highPlayersEndless[0]);
+                editor.putString(scoreOneEndless, highScoresEndless[0]);
+            }
+            if (highPlayersEndless[1] != null) {
+                editor.putString(playerTwoEndless, highPlayersEndless[1]);
+                editor.putString(scoreTwoEndless, highScoresEndless[1]);
+            }
+            if (highPlayersEndless[2] != null) {
+                editor.putString(playerThreeEndless, highPlayersEndless[2]);
+                editor.putString(scoreThreeEndless, highScoresEndless[2]);
+            }
+            if (highPlayersEndless[3] != null) {
+                editor.putString(playerFourEndless, highPlayersEndless[3]);
+                editor.putString(scoreFourEndless, highScoresEndless[3]);
+            }
+            if (highPlayersEndless[4] != null) {
+                editor.putString(playerFiveEndless, highPlayersEndless[4]);
+                editor.putString(scoreFiveEndless, highScoresEndless[4]);
+            }
             editor.apply();
         }
     }

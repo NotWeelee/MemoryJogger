@@ -13,6 +13,7 @@ public class highScoreActivity extends AppCompatActivity {
     //Setting up some variables
     TextView playerOneView, playerTwoView, playerThreeView, playerFourView, playerFiveView;
     TextView scoreOneView, scoreTwoView, scoreThreeView, scoreFourView, scoreFiveView;
+    TextView noScores;
     Button standardButton, endlessButton, resetScoresButton, backButton;
 
     public static final String sharedPrefs = "sharedPrefs";
@@ -29,17 +30,17 @@ public class highScoreActivity extends AppCompatActivity {
     public static final String scoreFour = "scoreFour";
     public static final String scoreFive = "scoreFive";
 
-    public static final String playerOneEndless = "playerOne";
-    public static final String playerTwoEndless = "playerTwo";
-    public static final String playerThreeEndless = "playerThree";
-    public static final String playerFourEndless = "playerFour";
-    public static final String playerFiveEndless = "playerFive";
+    public static final String playerOneEndless = "playerOneEndless";
+    public static final String playerTwoEndless = "playerTwoEndless";
+    public static final String playerThreeEndless = "playerThreeEndless";
+    public static final String playerFourEndless = "playerFourEndless";
+    public static final String playerFiveEndless = "playerFiveEndless";
 
-    public static final String scoreOneEndless = "scoreOne";
-    public static final String scoreTwoEndless = "scoreTwo";
-    public static final String scoreThreeEndless = "scoreThree";
-    public static final String scoreFourEndless = "scoreFour";
-    public static final String scoreFiveEndless = "scoreFive";
+    public static final String scoreOneEndless = "scoreOneEndless";
+    public static final String scoreTwoEndless = "scoreTwoEndless";
+    public static final String scoreThreeEndless = "scoreThreeEndless";
+    public static final String scoreFourEndless = "scoreFourEndless";
+    public static final String scoreFiveEndless = "scoreFiveEndless";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,15 +60,32 @@ public class highScoreActivity extends AppCompatActivity {
         scoreFourView = (TextView) findViewById(R.id.scoreFour);
         scoreFiveView = (TextView) findViewById(R.id.scoreFive);
 
+        noScores = (TextView) findViewById(R.id.noScoresText);
+
         standardButton = (Button) findViewById(R.id.standardScoreButton);
         endlessButton = (Button) findViewById(R.id.endlessScoreButton);
 
         backButton = (Button) findViewById(R.id.backButton);
         resetScoresButton= (Button) findViewById(R.id.resetHighScores);
 
+        noScores.setVisibility(View.GONE);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
+        if(sharedPreferences.getString(scoreOne, "").equals("")) {
+            noScores.setVisibility(View.VISIBLE);
+        }
+
         standardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clearHighScoreScreen();
+                SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
+                if(sharedPreferences.getString(scoreOne, "").equals("")) {
+                    noScores.setVisibility(View.VISIBLE);
+                }
+                else {
+                    noScores.setVisibility(View.GONE);
+                }
                 showHighScores();
             }
         });
@@ -76,6 +94,13 @@ public class highScoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 clearHighScoreScreen();
+                SharedPreferences sharedPreferences = getSharedPreferences(sharedPrefs, MODE_PRIVATE);
+                if(sharedPreferences.getString(scoreOneEndless, "").equals("")) {
+                    noScores.setVisibility(View.VISIBLE);
+                }
+                else {
+                    noScores.setVisibility(View.GONE);
+                }
                 showEndlessHighScores();
             }
         });
@@ -112,6 +137,7 @@ public class highScoreActivity extends AppCompatActivity {
 
                 editor.apply();
                 clearHighScoreScreen();
+                noScores.setVisibility(View.VISIBLE);
             }
         });
 

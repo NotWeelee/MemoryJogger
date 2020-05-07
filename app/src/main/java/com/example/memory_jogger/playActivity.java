@@ -1,6 +1,8 @@
 package com.example.memory_jogger;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +40,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
     int playerScore;
     boolean isResponding; //if true
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +70,12 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString("mode","standard");
+        editor.apply();
+
         //This code defines the thread
         myHandler = new android.os.Handler() {
             public void handleMessage(Message msg) {
@@ -78,7 +87,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
 
                     switch (sequenceToCopy[elementToPlay]) {
                         case 1:
-                            b1.setBackgroundColor(Color.BLACK);
+                            b1.setBackgroundColor(Color.WHITE);
                             System.out.println("ALEX button 1 being played");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -88,7 +97,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             }, 500);
                             break;
                         case 2:
-                            b2.setBackgroundColor(Color.BLACK);
+                            b2.setBackgroundColor(Color.WHITE);
                             System.out.println("ALEX button 2 being played");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -98,7 +107,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             }, 500);
                             break;
                         case 3:
-                            b3.setBackgroundColor(Color.BLACK);
+                            b3.setBackgroundColor(Color.WHITE);
                             System.out.println("ALEX button 3 being played");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -108,7 +117,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                             }, 500);
                             break;
                         case 4:
-                            b4.setBackgroundColor(Color.BLACK);
+                            b4.setBackgroundColor(Color.WHITE);
                             System.out.println("ALEX button 4 being played");
                             new Handler().postDelayed(new Runnable() {
                                 @Override
@@ -135,7 +144,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
         if (!playSequence) {     //checks if sequence is currently running
             switch (v.getId()) {
                 case R.id.blueButton:
-                    b1.setBackgroundColor(Color.BLACK);
+                    b1.setBackgroundColor(Color.WHITE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -145,7 +154,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                     checkElement(1);
                     break;
                 case R.id.redButton:
-                    b2.setBackgroundColor(Color.BLACK);
+                    b2.setBackgroundColor(Color.WHITE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -155,7 +164,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                     checkElement(2);
                     break;
                 case R.id.greenButton:
-                    b3.setBackgroundColor(Color.BLACK);
+                    b3.setBackgroundColor(Color.WHITE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -165,7 +174,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
                     checkElement(3);
                     break;
                 case R.id.yellowButton:
-                    b4.setBackgroundColor(Color.BLACK);
+                    b4.setBackgroundColor(Color.WHITE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
