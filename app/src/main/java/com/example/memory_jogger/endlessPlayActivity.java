@@ -73,7 +73,7 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
         SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("mode", "standard");
+        editor.putString("mode", "endless");
         editor.apply();
 
         //This code defines the thread and only runs when (playSequence == true)

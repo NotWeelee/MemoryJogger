@@ -32,7 +32,7 @@
     <string name="how_to_play">how to play</string>
     <string name="mainInstructions">tap on the squares in the same sequence that is shown to you</string>
     <string name="get_10_buttons_in_a_row_without_messing_up">get 10 buttons in a row without messing up!</string>
-    <string name="there_s_no_end_to_the_madness_keep_going_until_you_lose">there\'s no end to the madness! Keep going until you lose!</string>
+    <string name="there_s_no_end_to_the_madness_keep_going_until_you_lose">there\'s no end to the madness! keep going until you lose!</string>
     <string name="pick_your_mode">pick your mode</string>
     <string name="nothing_to_see_here_go_play_a_game_and_set_a_high_score">nothing to see here! go play a game and set a high score!</string>
 </resources>
