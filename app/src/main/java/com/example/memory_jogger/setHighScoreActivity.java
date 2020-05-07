@@ -87,10 +87,25 @@ public class setHighScoreActivity extends AppCompatActivity {
         playerScoreString = Integer.toString(playerScore);
         yourScore.setText(playerScoreString);
 
+        dataToArray();
+        for(int i = 0; i < 5; i++) {
+            if(highScores[i].equals("") && playerScore != 0) {
+                highScoreStatement.setText("You set a high score!");
+            }
+            else if(!highScores[i].equals("")) {
+                if(playerScore > Integer.parseInt(highScores[i])) {
+                    highScoreStatement.setText("You set a high score!");
+                }
+            }
+            else {
+                highScoreStatement.setText("Good Game!");
+            }
+
+        }
+
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dataToArray();
                 checkForHighScore();
                 updateSharedPrefs();
                 returnToMain();
@@ -168,17 +183,12 @@ public class setHighScoreActivity extends AppCompatActivity {
             if(highScores[i].equals("")) {
                 highScores[i] = Integer.toString(playerScore);
                 highPlayers[i] = playerName.getText().toString();
-                highScoreStatement.setText("You set a high score!");
                 break;
             }
             else if(playerScore > Integer.parseInt(highScores[i])) {
                 highScores = updateHighScoreArray(highScores, i, playerScore);
                 highPlayers = updateHighPlayerArray(highPlayers, i, playerName.getText().toString());
-                highScoreStatement.setText("You set a high score!");
                 break;
-            }
-            else {
-                highScoreStatement.setText("Good Game!");
             }
         }
     }
