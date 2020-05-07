@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 openActivityHighScore();
             }
         });
-
     }
 
     public void openActivityPlay(){

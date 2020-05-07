@@ -24,7 +24,7 @@ import java.util.Random;
 public class playActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView score;
-    Button b1, b2, b3, b4, start;
+    Button b1, b2, b3, b4, start, back;
 
     int difficultyLevel;
     int[] sequenceToCopy = new int[10];
@@ -48,6 +48,7 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
         b2 = (Button) findViewById(R.id.redButton);
         b3 = (Button) findViewById(R.id.greenButton);
         b4 = (Button) findViewById(R.id.yellowButton);
+        back = (Button) findViewById(R.id.backButton);
         start = (Button) findViewById(R.id.startButton);
         score = (TextView) findViewById(R.id.scoreNum);
         score.setText("Score: " + playerScore);
@@ -58,6 +59,13 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
         start.setOnClickListener(this);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMain();
+            }
+        });
 
         //This code defines the thread
         myHandler = new android.os.Handler() {
@@ -286,6 +294,11 @@ public class playActivity extends AppCompatActivity implements View.OnClickListe
     private void setHighScore() {
         Intent intent = new Intent(this, setHighScoreActivity.class);
         intent.putExtra("playerScore", playerScore);
+        startActivity(intent);
+    }
+
+    private void goToMain() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
