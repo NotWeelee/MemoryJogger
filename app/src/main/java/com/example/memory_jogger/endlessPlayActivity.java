@@ -1,5 +1,6 @@
 package com.example.memory_jogger;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -22,23 +23,24 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Random;
 
-public class endlessPlayActivity extends AppCompatActivity implements View.OnClickListener{
+public class endlessPlayActivity extends AppCompatActivity implements View.OnClickListener {
 
+    //create textview and buttons
     TextView score;
     Button b1, b2, b3, b4, start, back;
 
-    int difficultyLevel;
-    int[] sequenceToCopy = new int[10];
-
+    int[] sequenceToCopy = new int[999];
     private Handler myHandler;
     boolean playSequence = false;
+    int difficultyLevel;
     int elementToPlay = 0;
 
     //For Checking Player Answers
     int playerResponses;
     int playerScore;
-    boolean isResponding; //if true
+    boolean isResponding;
 
+    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +56,12 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
         score = (TextView) findViewById(R.id.scoreNum);
         score.setText("Score: " + playerScore);
 
-        //assign listeners
+        //assign listeners to buttons
         b1.setOnClickListener(this);
         b2.setOnClickListener(this);
         b3.setOnClickListener(this);
         b4.setOnClickListener(this);
         start.setOnClickListener(this);
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,25 +69,24 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
             }
         });
 
+        //High-scores
         SharedPreferences sharedPreferences = getSharedPreferences("sharedPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString("mode","endless");
+        editor.putString("mode", "standard");
         editor.apply();
 
-        //This code defines the thread
+        //This code defines the thread and only runs when (playSequence == true)
         myHandler = new android.os.Handler() {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
 
                 if (playSequence) {
-                    //Thread action goes here
                     unhighlight();
 
                     switch (sequenceToCopy[elementToPlay]) {
                         case 1:
-                            b1.setBackgroundColor(Color.BLACK);
-                            System.out.println("ALEX button 1 being played");
+                            b1.setBackgroundColor(Color.WHITE);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -95,8 +95,7 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
                             }, 500);
                             break;
                         case 2:
-                            b2.setBackgroundColor(Color.BLACK);
-                            System.out.println("ALEX button 2 being played");
+                            b2.setBackgroundColor(Color.WHITE);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -105,8 +104,7 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
                             }, 500);
                             break;
                         case 3:
-                            b3.setBackgroundColor(Color.BLACK);
-                            System.out.println("ALEX button 3 being played");
+                            b3.setBackgroundColor(Color.WHITE);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -115,8 +113,7 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
                             }, 500);
                             break;
                         case 4:
-                            b4.setBackgroundColor(Color.BLACK);
-                            System.out.println("ALEX button 4 being played");
+                            b4.setBackgroundColor(Color.WHITE);
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
@@ -139,10 +136,10 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        if (!playSequence) {     //checks if sequence is currently running
+        if (!playSequence) {
             switch (v.getId()) {
                 case R.id.blueButton:
-                    b1.setBackgroundColor(Color.BLACK);
+                    b1.setBackgroundColor(Color.WHITE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -152,7 +149,7 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
                     checkElement(1);
                     break;
                 case R.id.redButton:
-                    b2.setBackgroundColor(Color.BLACK);
+                    b2.setBackgroundColor(Color.WHITE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -162,7 +159,7 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
                     checkElement(2);
                     break;
                 case R.id.greenButton:
-                    b3.setBackgroundColor(Color.BLACK);
+                    b3.setBackgroundColor(Color.WHITE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -172,7 +169,7 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
                     checkElement(3);
                     break;
                 case R.id.yellowButton:
-                    b4.setBackgroundColor(Color.BLACK);
+                    b4.setBackgroundColor(Color.WHITE);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -182,7 +179,7 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
                     checkElement(4);
                     break;
                 case R.id.startButton:
-                    difficultyLevel = 1; //default starting value for debugging
+                    difficultyLevel = 1;
                     playerScore = 0;
                     score.setText("Score: " + playerScore);
                     playASequence();
@@ -192,10 +189,6 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
         }
     }
 
-    /**
-     * Populates the sequenceToCopy array with random numbers 1-4
-     * Should only be called once per game
-     */
     public void createSequence() {
         Random randInt = new Random();
         int ourRandom;
@@ -206,18 +199,12 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
             ourRandom++;
             sequenceToCopy[i] = ourRandom;
         }
-        //DEBUGGING CODE IGNORE
-        System.out.println("ALEX sequenceToCopy length is " + sequenceToCopy.length);
-        System.out.println("ALEX Now printing the sequence:");
-        for (int i = 0; i < sequenceToCopy.length; i++) {
-            System.out.println("ALEX Index: " + i + "    Random #: " + sequenceToCopy[i]);
-        }
     }
 
     public void playASequence() {
         disableButtons();
         if (playerScore <= 0) {
-            createSequence();       //generate new random sequence
+            createSequence();
             playerResponses = 0;    //reset # responses
         }
 
@@ -226,35 +213,23 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
         playSequence = true; //immediately starts thread handler block
     }
 
-    /**
-     * Checks users choice against array of randoms
-     */
     public void checkElement(int thisElement) {
         if (isResponding) {
             playerResponses++;
             if (sequenceToCopy[playerResponses - 1] == thisElement) {
                 //if correct guess
                 if (playerResponses == difficultyLevel) {
-                    //got entire sequence correct
-                    System.out.println("ALEX got entire sequence correct");
+                    //if level completed
                     isResponding = false;
                     difficultyLevel++;
                     playerScore = playerScore + 1;   //increment score
                     score.setText("Score: " + playerScore);
                     Toast.makeText(this, "Good job, next level...", Toast.LENGTH_SHORT).show();
-
-                    if (playerScore == sequenceToCopy.length) {
-                        Toast.makeText(this, "YOU WIN!", Toast.LENGTH_LONG*5).show();
-                        disableButtons();
-                        setHighScore();
-
-                    } else {
-                        playASequence();
-                    }
+                    playASequence();
                 }
             } else {
                 //if wrong guess
-                Toast.makeText(this, "YOU LOSE!", Toast.LENGTH_LONG * 4).show();
+                Toast.makeText(this, "GAME OVER!", Toast.LENGTH_LONG * 4).show();
                 disableButtons();
                 isResponding = false;
                 setHighScore();
@@ -264,12 +239,6 @@ public class endlessPlayActivity extends AppCompatActivity implements View.OnCli
 
     public void sequenceFinished() {
         playSequence = false; //immediately ends thread block
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                unhighlight();
-//            }
-//        }, 800);
         Toast.makeText(this, "Your Turn...", Toast.LENGTH_LONG * 2).show();
 
         playerResponses = 0;
